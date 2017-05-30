@@ -1,0 +1,13 @@
+
+STACK_NAME="steam"
+
+
+# Notice:
+# This file will be copied to the server, Steam recommends using a separate account for server installs.
+# 
+# Some games require that the account owns the game for downloading the server files.
+#
+# If you store your setup in VCS be careful with whom has read access
+STEAM_USER="<steam username>"
+STEAM_PASS="<steam password>"
+

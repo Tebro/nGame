@@ -1,0 +1,14 @@
+[Unit]
+Description=Minecraft server
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/mc
+ExecStart=/usr/bin/java -Xmx1024M -Xms1024M -jar minecraft.jar
+Restart=always

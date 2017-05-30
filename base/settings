@@ -1,0 +1,6 @@
+#!/bin/bash
+
+STACK_NAME=base
+
+# This is linked to the AMI, don't change it if you don't know what you are doing
+SSH_USER=ubuntu

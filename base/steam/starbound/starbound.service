@@ -1,0 +1,14 @@
+[Unit]
+Description=starbound server
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/Steam/starbound/linux
+ExecStart=/home/ubuntu/Steam/starbound/linux/starbound_server
+Restart=always

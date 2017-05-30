@@ -1,0 +1,11 @@
+#!/bin/bash
+
+STACK_NAME_PREFIX="dynamic"
+
+
+SSH_KEY="<keypair_name>"
+VPC_ID="<vpc-id>"
+SUBNET="<subnet-id>"
+# EFS Security group
+EFS_SG="<sg-id>"
+EFS_DOMAIN="<efs-domain-name>"
