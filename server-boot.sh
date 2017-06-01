@@ -27,13 +27,13 @@ ALL_CREATE=$($DIR/bin/find-all-upwards.sh $TARGET create.sh)
 echo "Lifecycle: Create"
 while read -r line; do
     chmod +x ./$line
-    ./$line $STACK_NAME
+    ./$line $FULL_STACK_NAME
 done <<< "$ALL_CREATE"
 
 ALL_START=$($DIR/bin/find-all-upwards.sh $TARGET start.sh)
 echo "Lifecycle: Start"
 while read -r line; do
     chmod +x ./$line
-    ./$line $STACK_NAME
+    ./$line $FULL_STACK_NAME
 done <<< "$ALL_START"
 
