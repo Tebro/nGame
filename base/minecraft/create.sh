@@ -16,7 +16,16 @@ fi
 
 cp $DIR/server.properties ~/mc/server.properties
 
-# TODO: Setup periodic backup
+# Build backup script
+# Backup everything except the server jar
+# TODO: Should the jar file be backed up?
+cat <<EOF > ~/backup.sh
+cd ~/mc
+cp -r \$(ls |grep -v minecraft.jar) /data/
+EOF
+chmod +x ~/backup.sh
+# Setup crontab
+(crontab -l 2>/dev/null; echo "*/2 * * * * ~/backup.sh") | crontab -
 
 sudo cp $DIR/minecraft.service /etc/systemd/system/minecraft.service
 sudo systemctl daemon-reload
