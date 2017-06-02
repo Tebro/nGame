@@ -51,6 +51,15 @@ aws cloudformation wait stack-create-complete --stack-name $FULL_STACK_NAME
 echo "Waiting for instance IP"
 INSTANCE_IP=$(./bin/retrieve-instance-ip.sh $FULL_STACK_NAME)
 
+if [ ! -z "$STACK_DNS" ] && [ ! -z "$R53_HOSTED_ZONE" ]; then
+    echo "Creating DNS stack"
+    aws cloudformation create-stack \
+        --stack-name "$FULL_STACK_NAME--dns" \
+        --template-body file://stack-dns.yaml \
+        --parameters ParameterKey=paramHostedZoneId,ParameterValue=$R53_HOSTED_ZONE \
+                     ParameterKey=paramDnsName,ParameterValue=$STACK_DNS \
+                     ParameterKey=paramInstanceIp,ParameterValue=$INSTANCE_IP
+fi
 
 SSH_OPTS="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 

@@ -28,6 +28,7 @@ echo "Triggering teardown on server"
 ssh -tt $SSH_OPTS $SSH_USER@$INSTANCE_IP chmod +x payload/server-teardown.sh
 ssh -tt $SSH_OPTS $SSH_USER@$INSTANCE_IP "cd payload; ./server-teardown.sh $TARGET $FULL_STACK_NAME"
 
+aws cloudformation delete-stack --stack-name "$FULL_STACK_NAME--dns"
 aws cloudformation delete-stack --stack-name $FULL_STACK_NAME
 echo "Waiting for stack to be deleted"
 aws cloudformation wait stack-delete-complete --stack-name $FULL_STACK_NAME

@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A server
+Parameters:
+    paramHostedZoneId:
+      Description: The R53 hosted zone
+      Type: String
+    paramDnsName:
+      Description: The domain name to point
+      Type: String
+    paramInstanceIp:
+      Description: The IP to point to
+      Type: String
+Resources:
+  dnsRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneId: {Ref: paramHostedZoneId} 
+      Comment: DNS name for my instance.
+      Name: {Ref: paramDnsName}
+      Type: A
+      TTL: '60'
+      ResourceRecords:
+        - {Ref: paramInstanceIp}

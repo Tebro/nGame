@@ -9,3 +9,6 @@ SUBNET="<subnet-id>"
 # EFS Security group
 EFS_SG="<sg-id>"
 EFS_DOMAIN="<efs-domain-name>"
+# If you want to point a domain name to the instance use the below configs. The STACK_DNS can also be defined per server type level
+#STACK_DNS=<domain_name>
+#R53_HOSTED_ZONE=<hosted_zone_id>
