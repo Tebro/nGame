@@ -1,0 +1,14 @@
+[Unit]
+Description=Factorio server
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/factorio
+ExecStart=/home/ubuntu/factorio/bin/x64/factorio --start-server /data/savegame.zip --server-settings /home/ubuntu/factorio/server-settings.json
+Restart=always

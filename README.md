@@ -6,6 +6,8 @@ The idea is to use cloudformation to spawn a Spot instance and then use scripts 
 
 This way you can only run the server when you want to play, and only pay spot instance pricing for that duration.
 
+Check target folders for README files containing details for their usage.
+
 ## Notice
 
 This toolkit is under very active development, nothing is guaranteed to work.
