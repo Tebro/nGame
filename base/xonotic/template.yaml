@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: A server
+Parameters:
+    paramAmi:
+      Description: The AMI to use
+      Type: String
+      Default: ami-b5a893d3
+    paramSshKeyName:
+      Description: SSH key
+      Type: String
+    paramInstanceType:
+      Description: Instance type
+      Type: String
+      Default: m4.large
+    paramVPCId:
+      Description: The VPC
+      Type: String
+    paramSubnet:
+      Description: Subnet to attach to
+      Type: String
+    paramEFSSG:
+      Description: The security group that allows connection to EFS
+      Type: String
+Resources:
+  resourceAsg:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      AvailabilityZones: [eu-west-1a]
+      Cooldown: '300'
+      DesiredCapacity: '1'
+      HealthCheckGracePeriod: '300'
+      HealthCheckType: EC2
+      MaxSize: '2'
+      MinSize: '1'
+      VPCZoneIdentifier:
+        - {Ref: paramSubnet}
+      LaunchConfigurationName: {Ref: resourceLc}
+      Tags:
+      - {Key: Name, Value: {Ref: 'AWS::StackName'}, PropagateAtLaunch: 'true'}
+      TerminationPolicies: [Default]
+  resourceLc:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Properties:
+      ImageId: {Ref: paramAmi}
+      InstanceType: {Ref: paramInstanceType}
+      KeyName: {Ref: paramSshKeyName}
+      SpotPrice: '0.2'
+      SecurityGroups:
+      - {Ref: resourceSg}
+      - {Ref: paramEFSSG}
+      BlockDeviceMappings:
+      - DeviceName: /dev/sda1
+        Ebs: {VolumeSize: 8, VolumeType: gp2}
+  resourceSg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group
+      VpcId: {Ref: paramVPCId}
+      SecurityGroupEgress:
+      - {CidrIp: 0.0.0.0/0, FromPort: -1, IpProtocol: -1, ToPort: -1}
+      SecurityGroupIngress:
+      - {IpProtocol: tcp, FromPort: '22', ToPort: '22', CidrIp: 0.0.0.0/0}
+      - {IpProtocol: tcp, FromPort: '26000', ToPort: '26000', CidrIp: 0.0.0.0/0}
+
+
